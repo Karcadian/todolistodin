@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+aside {
+    width: 250px;
+    background-color: #f0f0f0;
+    padding: 1rem;
+}
+
+#main-content {
+    flex: 1;
+    padding: 1rem;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#project-list {
+    margin-top: 1rem;
+}
+
+#project-list div {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
