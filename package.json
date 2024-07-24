@@ -1,0 +1,19 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Karcadian/todolistodin.git"
+  },
+  "author": "jimmyle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Karcadian/todolistodin/issues"
+  },
+  "homepage": "https://github.com/Karcadian/todolistodin#readme",
+  "description": ""
+}
