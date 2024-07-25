@@ -1,39 +1,175 @@
 body {
-    display: flex;
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
-aside {
-    width: 250px;
-    background-color: #f0f0f0;
-    padding: 1rem;
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sidebar button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 #main-content {
-    flex: 1;
-    padding: 1rem;
+    flex-grow: 1;
+    padding: 20px;
 }
 
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+.project-item {
     cursor: pointer;
-    margin-bottom: 1rem;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.project-item:hover {
+    background-color: #e0e0e0;
 }
 
-#project-list {
-    margin-top: 1rem;
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  /* Ensure the form container takes the full width */
 }
 
-#project-list div {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ddd;
+/* The popup form - hidden by default */
+#form-container {
+    display: none;
+    border: 3px solid #f1f1f1;
 }
+
+#project-form-container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#project-form-container.active {
+    display: block;
+}
+
+#project-form-container .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#project-form-container h2 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    text-align: center;  /* Center the header text */
+}
+
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.open-button:hover {
+    opacity: 1;
+}
+
+.form-container input[type=text], 
+.form-container input[type=password], 
+.form-container input[type=date], 
+.form-container select {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+.form-container input[type=text]:focus, 
+.form-container input[type=password]:focus, 
+.form-container input[type=date]:focus, 
+.form-container select:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.form-container .cancel {
+    background-color: red;
+}
+
+.form-container .btn:hover {
+    opacity: 1;
+}
+
+#project-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    width: 100%; /* Ensure the form takes the full width of the container */
+}
+
+.form-row {
+    display: flex;
+    align-items: center; /* Align label and input vertically */
+    margin: 10px 0; /* Space between rows */
+}
+
+.form-row label {
+    width: 30%; /* Adjust label width */
+    margin-right: 10px; /* Space between label and input */
+}
+
+#project-form input[type=text] {
+    width: 70%; /* Make input fill the remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+

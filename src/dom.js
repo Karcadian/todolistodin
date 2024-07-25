@@ -1,32 +1,24 @@
-import { getProjects, deleteProject, deleteItem } from './todolist';
+import { getProjects } from './todolist';
 
 export function renderProjects() {
-    const projectsContainer = document.getElementById('projects-container');
-    if (!projectsContainer) {
-        console.error('Projects container not found');
-        return;
-    }
-
-    projectsContainer.innerHTML = '';
+    const projectsList = document.getElementById('projects-list');
+    projectsList.innerHTML = ''; // Clear the list first
     const projects = getProjects();
 
     projects.forEach(project => {
-        if (project) { // Check if project exists
-            const projectDiv = document.createElement('div');
-            projectDiv.className = 'project-item';
-            projectDiv.dataset.id = project.id;
-            projectDiv.innerHTML = `
-                <h3>${project.title || 'Untitled'}</h3>
-                <p>${project.description || 'No description'}</p>
-                <p>Due: ${project.dueDate || 'No due date'}</p>
-                <p>Priority: ${project.priority || 'No priority'}</p>
-                <button onclick="deleteProject('${project.id}')">Delete Project</button>
-            `;
-            projectsContainer.appendChild(projectDiv);
-        }
+        const projectDiv = document.createElement('div');
+        projectDiv.className = 'project-item';
+        projectDiv.dataset.id = project.id;
+        projectDiv.innerHTML = `
+            <h3>${project.title}</h3>
+            <p>${project.description}</p>
+            <p>Due: ${project.dueDate}</p>
+            <p>Priority: ${project.priority}</p>
+            <button onclick="deleteProject('${project.id}')">Delete Project</button>
+        `;
+        projectsList.appendChild(projectDiv);
     });
 }
-
 
 export function renderItems(projectId) {
     const project = getProjects().find(project => project.id === projectId);
@@ -35,40 +27,61 @@ export function renderItems(projectId) {
 
     if (project) {
         project.items.forEach(item => {
-            if (item) { // Ensure no null or undefined items are rendered
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.dataset.id = item.id;
-                itemDiv.innerHTML = `
-                    <h4>${item.title}</h4>
-                    <p>${item.description}</p>
-                    <p>Due: ${item.dueDate}</p>
-                    <p>Priority: ${item.priority}</p>
-                    <button onclick="deleteItem('${projectId}', '${item.id}')">Delete Item</button>
-                `;
-                contentDiv.appendChild(itemDiv);
-            }
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item';
+            itemDiv.dataset.id = item.id;
+            itemDiv.innerHTML = `
+                <h4>${item.title}</h4>
+                <p>${item.description}</p>
+                <p>Due: ${item.dueDate}</p>
+                <p>Priority: ${item.priority}</p>
+                <button onclick="deleteItem('${projectId}', '${item.id}')">Delete Item</button>
+            `;
+            contentDiv.appendChild(itemDiv);
         });
     }
 }
 
-export function renderProjectForm() {
-    const formHtml = `
-        <form id="project-form">
-            <label>Title: <input type="text" name="title" required /></label>
-            <label>Description: <input type="text" name="description" /></label>
-            <label>Due Date: <input type="date" name="dueDate" /></label>
-            <label>Priority: 
-                <select name="priority">
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-            </label>
-            <button type="submit">Create Project</button>
-        </form>
+export function renderProjectForm() {   
+    const formContainer = document.getElementById('form-container');
+    formContainer.innerHTML = `
+        <div id="project-form-container" class="form-popup">
+            <div class="form-header">
+                <h2>New Project Form</h2>
+            </div>
+            <form id="project-form">
+                <div class="form-row">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label for="description">Description:</label>
+                    <input type="text" name="description">
+                </div>
+                <button type="submit">Create Project</button>
+                <button type="button" class="btn cancel" id="cancel-form-btn">Cancel</button>
+            </form>
+        </div>
     `;
-    document.getElementById('form-container').innerHTML = formHtml;
+    formContainer.style.display = 'block';
+
+    // Add close button functionality
+    document.getElementById('cancel-form-btn').addEventListener('click', () => {
+        formContainer.style.display = 'none';
+    });
+
+    // Event Listener for handling project form submission
+    document.getElementById('project-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = e.target.title.value;
+        const description = e.target.description.value;
+        const dueDate = format(parseISO(e.target.dueDate.value), 'yyyy-MM-dd');
+        const priority = e.target.priority.value;
+
+        createProject(title, description, dueDate, priority);
+        formContainer.style.display = 'none';
+        renderProjects();
+    });
 }
 
 export function renderItemForm() {
@@ -96,15 +109,5 @@ export function renderItemForm() {
         </form>
     `;
     document.getElementById('form-container').innerHTML = formHtml;
+    document.getElementById('form-container').style.display = 'block';
 }
-
-window.deleteProject = (projectId) => {
-    deleteProject(projectId);
-    renderProjects();
-};
-
-window.deleteItem = (projectId, itemId) => {
-    deleteItem(projectId, itemId);
-    renderItems(projectId);
-};
-
