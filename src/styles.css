@@ -30,12 +30,40 @@ body {
     padding: 20px;
 }
 
+#projects-list {
+    width: 200px; /* Full width of the sidebar */
+    margin: 0; /* Remove margin */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+    max-height: calc(100vh - 120px); /* Set a max height to fit within the sidebar */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
 .project-item {
     cursor: pointer;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in width/height calculations */
+    display: flex; /* Use flex for layout */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.project-item h3,
+.project-item p {
+    margin: 0; /* Remove margin */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add "..." for truncated text */
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+.project-item h3 {
+    flex-grow: 1; /* Allow title to take available space */
+}
+
+.project-item p {
+    max-width: 150px; /* Set a max width for the description */
 }
 
 .project-item:hover {
@@ -172,4 +200,156 @@ body {
     border-radius: 4px;
 }
 
+#project-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 16px;
+}
+
+#project-form button[type="submit"] {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease;
+}
+
+#project-form button[type="submit"]:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+#project-form button.cancel {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease;
+}
+
+#project-form button.cancel:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px; /* Add margin on top for spacing */
+}
+
+.item {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    padding: 15px; /* Add padding for better spacing */
+    margin-bottom: 10px; /* Space between items */
+    border: 1px solid #ccc; /* Border for card-like effect */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.item h4 {
+    margin: 0 0 5px 0; /* Remove margin below the title */
+}
+
+.item p {
+    margin: 5px 0; /* Space between paragraphs */
+}
+
+.item-controls {
+    display: flex;
+    justify-content: space-between; /* Space between checkbox and buttons */
+    align-items: center; /* Center items vertically */
+    margin-top: 10px; /* Space above controls */
+}
+
+.item-checkbox {
+    margin-right: 10px; /* Space between checkbox and text */
+}
+
+/* Styles for item form container */
+#item-form-container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#item-form-container h2 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    text-align: center; /* Center the header text */
+}
+
+.form-row label {
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+.form-row input[type=text],
+.form-row input[type=date],
+.form-row select {
+    width: 100%; /* Make input fill the full width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#item-form-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+#item-form-container button[type="submit"] {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease;
+}
+
+#item-form-container button[type="submit"]:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+#item-form-container button.cancel {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease;
+}
+
+#item-form-container button.cancel:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+#button-container {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    width: 100%; /* Full width */
+    margin-top: 10px; /* Add space above buttons */
+}
+
+.delete-project-btn {
+    width: 80px; /* Set a fixed width for the delete button */
+    align-self: flex-end; /* Align the button to the end of the project item */
+    margin-top: 5px; /* Reduce space above the button */
+}
+
+/* Add a small space between the title, description, and the button */
+.project-item h3,
+.project-item p {
+    margin-bottom: 5px; /* Add a small margin below title and description */
+}
 

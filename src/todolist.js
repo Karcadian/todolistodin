@@ -1,62 +1,56 @@
-import { renderProjects } from './dom';
+import Project from './project';
+import Item from './item';
 
-let projects = JSON.parse(localStorage.getItem('projects')) || [];
+// Load projects from local storage and convert to Project instances
+export function loadProjects() {
+    const storedProjects = JSON.parse(localStorage.getItem('projects')) || [];
+    return storedProjects.map(proj => {
+        // Convert items to instances of Item
+        const items = proj.items.map(itemData => new Item(itemData.id, itemData.title, itemData.description, itemData.dueDate, itemData.priority));
+        return new Project(proj.id, proj.title, proj.description, items);
+    });
+}
 
-export function createProject(title, description, dueDate, priority) {
-    if (projects.some(project => project.title === title)) {
-        alert('A project with this title already exists.');
-        return;
-    }
+// Save projects to local storage
+export function saveProjects() {
+    const projectData = projects.map(proj => ({
+        id: proj.id,
+        title: proj.title,
+        description: proj.description,
+        items: proj.items.map(item => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            dueDate: item.dueDate,
+            priority: item.priority,
+        })) // Convert each item to a plain object
+    }));
+    localStorage.setItem('projects', JSON.stringify(projectData));
+}
 
-    const newProject = {
-        id: Date.now().toString(),
-        title,
-        description,
-        dueDate,
-        priority,
-        items: []
-    };
+// Initialize projects
+let projects = loadProjects();
+
+export function createProject(id, title, description) {
+    const newProject = new Project(id, title, description);
     projects.push(newProject);
     saveProjects();
 }
 
-export function createItem(title, description, dueDate, priority, projectId) {
-    const project = projects.find(project => project.id === projectId);
-    if (project) {
-        const newItem = {
-            id: Date.now().toString(),
-            title,
-            description,
-            dueDate,
-            priority
-        };
-        project.items.push(newItem);
-        saveProjects();
-    }
-}
-
 export function updateProjects() {
-    projects = JSON.parse(localStorage.getItem('projects')) || [];
-    projects = projects.filter(project => project && project.id); // Filter out invalid projects
-}
-
-export function saveProjects() {
-    localStorage.setItem('projects', JSON.stringify(projects));
+    projects = loadProjects();
 }
 
 export function deleteProject(projectId) {
-    projects = projects.filter(project => project.id !== projectId);
+    const projectIntId = projectId;
+    projects = projects.filter(project => project.id !== projectIntId);
     saveProjects();
-}
-
-export function deleteItem(projectId, itemId) {
-    const project = projects.find(project => project.id === projectId);
-    if (project) {
-        project.items = project.items.filter(item => item.id !== itemId);
-        saveProjects();
-    }
 }
 
 export function getProjects() {
     return projects;
+}
+
+export function getProject(projectId) {
+    return projects.find(project => project.id === projectId);
 }
